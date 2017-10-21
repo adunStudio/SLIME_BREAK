@@ -1,21 +1,18 @@
 from pico2d import *
-from framework import ADUN
-from Scene import gameScene
+from Framework.ADUN import Director, Scene
+from Scene.gameScene import GameScene
 
 
-class Scene(ADUN.Scene):
+class TitleScene(Scene):
     core = None
     image = None
     time = 60 * 2
 
-    def __init__(self, core):
-        self.core = core
-
     def enter(self):
-        self.image = load_image("Asset/title.png")
+        self.image = Director.asset["title"]
 
     def exit(self):
-        del self.image
+        pass
 
     def pause(self):
         pass
@@ -24,18 +21,12 @@ class Scene(ADUN.Scene):
         pass
 
     def handle_events(self, events):
-
         for event in events:
-            if event.type == SDL_QUIT:
-                self.core.quit()
-            else:
-                if event.type == SDL_KEYDOWN:
-                    self.core.change_scene(gameScene.Scene(self.core))
+            if event.type == SDL_KEYDOWN:
+                Director.change_scene(GameScene())
 
     def update(self):
         pass
 
     def draw(self):
-        clear_canvas()
         self.image.draw(400, 300)
-        update_canvas()

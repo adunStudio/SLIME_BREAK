@@ -1,7 +1,11 @@
-from Scene import startScene
-from framework import ADUN
+from pico2d import *
+from Framework.ADUN import Director
+from Scene.startScene import StartScene
 
-core = ADUN.Core()
-core.run(startScene.Scene(core))
+open_canvas()
 
+Director.pre_load(["character", "slime", "kpu_credit", "title", "mouse_pointer"])
 
+Director.run(StartScene())
+
+close_canvas()

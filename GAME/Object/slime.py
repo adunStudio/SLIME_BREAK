@@ -1,15 +1,12 @@
-from pico2d import *
-from framework import ADUN
+from Framework.ADUN import Director, Node
 import random
 
 
-class Slime(ADUN.Node):
+class Slime(Node):
     image = None
 
     def __init__(self):
-        self.image = load_image("Asset/slime.png")
-        self.width = self.image.w
-        self.height = self.image.h
+        Node.__init__(self, "slime")
 
         self.x = random.randint(1, 300)
         self.y = random.randint(1, 300)

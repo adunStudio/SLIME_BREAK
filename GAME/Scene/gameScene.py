@@ -1,18 +1,20 @@
 from pico2d import *
-from framework import ADUN
-from Monster import slime
+
+from Framework.ADUN import Director, Scene
+from Object.character import Character
+from Object.slime import Slime
 
 
-class Scene(ADUN.Scene):
-    core = None
+class GameScene(Scene):
     monsters = []
-
-    def __init__(self, core):
-        self.core = core
+    player = None
 
     def enter(self):
+
         for i in range(11):
-            self.monsters.append(slime.Slime())
+            self.monsters.append(Slime())
+
+        self.player = Character()
 
     def exit(self):
         pass
@@ -24,9 +26,13 @@ class Scene(ADUN.Scene):
         pass
 
     def handle_events(self, events):
-        for event in events:
-            if event.type == SDL_QUIT:
-                self.core.quit()
+        if Director.KEYBOARD["LEFT"]:
+            self.player.x -= 1
+
+        if Director.KEYBOARD["RIGHT"]:
+            self.player.x += 1
+
+        pass
 
     def update(self):
 
@@ -34,9 +40,8 @@ class Scene(ADUN.Scene):
             monster.update()
 
     def draw(self):
-        clear_canvas()
-
         for monster in self.monsters:
             monster.draw()
 
-        update_canvas()
+        self.player.draw()
+
