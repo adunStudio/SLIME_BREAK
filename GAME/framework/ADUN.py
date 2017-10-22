@@ -15,12 +15,14 @@ class Core:
     asset = {}
     mouse = None
     events = None
-    KEYBOARD =\
+    INPUT =\
     {
         "LEFT": False,
         "RIGHT": False,
         "UP": False,
-        "DOWN": False
+        "DOWN": False,
+        "LEFT_CLICK": False,
+        "RIGHT_CLICK": False
     }
 
     @staticmethod
@@ -90,18 +92,24 @@ class Core:
             if event.type == SDL_MOUSEMOTION:
                 self.mouse_x, self.mouse_y = event.x, self.window_height - event.y
 
+            if event.type == SDL_MOUSEBUTTONDOWN or event.type == SDL_MOUSEBUTTONUP:
+                if event.button == SDL_BUTTON_LEFT:
+                    self.INPUT["LEFT_CLICK"] = (event.type == SDL_MOUSEBUTTONDOWN)
+                elif event.button == SDL_BUTTON_RIGHT:
+                    self.INPUT["RIGHT_CLICK"] = (event.type == SDL_MOUSEBUTTONDOWN)
+
             if event.type == SDL_QUIT:
                 Director.quit()
 
             if event.type == SDL_KEYDOWN or event.type == SDL_KEYUP:
                 if event.key == SDLK_RIGHT or event.key == SDLK_d:
-                    self.KEYBOARD["RIGHT"] = (event.type == SDL_KEYDOWN)
+                    self.INPUT["RIGHT"] = (event.type == SDL_KEYDOWN)
                 elif event.key == SDLK_LEFT or event.key == SDLK_a:
-                    self.KEYBOARD["LEFT"] = (event.type == SDL_KEYDOWN)
+                    self.INPUT["LEFT"] = (event.type == SDL_KEYDOWN)
                 elif event.key == SDLK_UP or event.key == SDLK_w:
-                    self.KEYBOARD["UP"] = (event.type == SDL_KEYDOWN)
+                    self.INPUT["UP"] = (event.type == SDL_KEYDOWN)
                 elif event.key == SDLK_DOWN or event.key == SDLK_s:
-                    self.KEYBOARD["DOWN"] = (event.type == SDL_KEYDOWN)
+                    self.INPUT["DOWN"] = (event.type == SDL_KEYDOWN)
 
     def get_mouse_x(self):
         return self.mouse_x

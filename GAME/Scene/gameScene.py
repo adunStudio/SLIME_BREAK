@@ -3,11 +3,13 @@ from pico2d import *
 from Framework.ADUN import Director, Scene
 from Object.character import Character
 from Object.gun import Gun
+from Object.bullet import Bullet
 from Object.slime import Slime
 
 
 class GameScene(Scene):
     monsters = []
+    bullets = []
     player = None
 
     def enter(self):
@@ -29,16 +31,20 @@ class GameScene(Scene):
         pass
 
     def handle_events(self, events):
-        if Director.KEYBOARD["LEFT"]:
+        if Director.INPUT["LEFT_CLICK"]:
+            print(3)
+            self.bullets.append(Bullet(self.player.x, self.player.y))
+
+        if Director.INPUT["LEFT"]:
             self.player.x -= self.player.speed
 
-        if Director.KEYBOARD["RIGHT"]:
+        if Director.INPUT["RIGHT"]:
             self.player.x += self.player.speed
 
-        if Director.KEYBOARD["UP"]:
+        if Director.INPUT["UP"]:
             self.player.y += self.player.speed
 
-        if Director.KEYBOARD["DOWN"]:
+        if Director.INPUT["DOWN"]:
             self.player.y -= self.player.speed
 
 
@@ -58,6 +64,9 @@ class GameScene(Scene):
     def draw(self):
         for monster in self.monsters:
             monster.draw()
+
+        for bullet in self.bullets:
+            bullet.draw()
 
         self.player.draw()
 
