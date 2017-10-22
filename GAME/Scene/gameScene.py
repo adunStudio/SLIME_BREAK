@@ -52,45 +52,21 @@ class GameScene(Scene):
 
     def update(self):
         self.time += 1
+        Director.set_mouse_type("attack")
 
         if self.time > 60 * 2:
-            self.monsters.append(Slime(random.randint(0, Director.window_width), random.randint(0, Director.window_height), self.base))
+            self.add_monster()
             self.time = 0
 
+        self.check_mouse_attack()
 
-        Director.set_mouse_type("attack")
-        for monster in self.monsters:
-            if monster.intersect(Director.mouse):
-                Director.set_mouse_type("attack_red")
+        self.bullet_update()
 
-        print(len(self.bullets))
-
-        for bullet in self.bullets:
-            bullet.update()
-
-            for monster in self.monsters:
-                if monster.inWith(25, bullet):
-                    self.explodes.append(Explode(bullet.x, bullet.y, "2", 30))
-                    monster.set_red()
-                    monster.hp -= self.player.gun.damage
-                    if bullet in self.bullets:
-                        self.bullets.remove(bullet)
-
-            if (bullet.x < 0 or Director.window_width < bullet.x or bullet.y < 0 or Director.window_height < bullet.y):
-                self.bullets.remove(bullet)
-
-        for explode in self.explodes:
-            explode.update()
-            if explode.time < 0:
-                self.explodes.remove(explode)
+        self.explode_update()
 
         self.player.update()
 
-        for monster in self.monsters:
-            monster.update()
-            if monster.hp <= 0:
-                self.monsters.remove(monster)
-
+        self.monster_update()
 
     def draw(self):
         self.base.draw()
@@ -105,4 +81,44 @@ class GameScene(Scene):
             explode.draw()
 
         self.player.draw()
+
+    def add_monster(self):
+        self.monsters.append(Slime(random.randint(0, Director.window_width), random.randint(0, Director.window_height), self.base))
+
+    def check_mouse_attack(self):
+        for monster in self.monsters:
+            if monster.intersect(Director.mouse):
+                Director.set_mouse_type("attack_red")
+
+    def bullet_update(self):
+        for bullet in self.bullets:
+            bullet.update()
+
+            for monster in self.monsters:
+                if monster.inWith(25, bullet):
+                    self.explodes.append(Explode(bullet.x, bullet.y, "2", 30))
+                    monster.set_red()
+                    monster.hp -= self.player.gun.damage
+                    if bullet in self.bullets:
+                        self.bullets.remove(bullet)
+
+            if bullet.x < 0 or Director.window_width < bullet.x or bullet.y < 0 or Director.window_height < bullet.y:
+                self.bullets.remove(bullet)
+
+    def explode_update(self):
+        for explode in self.explodes:
+            explode.update()
+            if explode.time < 0:
+                self.explodes.remove(explode)
+
+    def monster_update(self):
+        for monster in self.monsters:
+            monster.update()
+            if monster.hp <= 0:
+                self.monsters.remove(monster)
+
+
+
+
+
 
