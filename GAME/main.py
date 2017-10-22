@@ -17,8 +17,9 @@ Director.pre_load([
     "mg_up", "mg_up_left", "mg_up_right",
     "mouse_pointer", "mouse_attack", "mouse_attack_red",
     "bullet", "explode1", "explode2", "shockwave",
-    "slime", "slime_red", "slime_break",
+    "slime", "slime_red", "slime_break", "slime_explode", "slime_explode_red",
     "base", "crystal",
+    "coin",
     "kpu_credit", "title"])
 
 Director.set_mouse(Mouse())

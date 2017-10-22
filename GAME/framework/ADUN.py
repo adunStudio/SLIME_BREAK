@@ -182,15 +182,14 @@ class Node(metaclass=ABCMeta):
     image = None
     x, y = (0, 0)
     width, height = (0, 0)
+    half_width, half_height = (0, 0)
     frame = 0
     frame_x = 0
 
     def __init__(self, image_name):
         self.image = Director.asset[image_name]
-        self.width = self.image.w
-        self.height = self.image.h
-        self.half_width = self.width / 2
-        self.half_height = self.height / 2
+        self.init()
+
 
     @abstractmethod
     def update(self):
@@ -199,6 +198,12 @@ class Node(metaclass=ABCMeta):
     @abstractmethod
     def draw(self):
         pass
+
+    def init(self):
+        self.width = self.image.w
+        self.height = self.image.h
+        self.half_width = self.width / 2
+        self.half_height = self.height / 2
 
     # AABB 방식
     def intersect(self, node):

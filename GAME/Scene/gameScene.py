@@ -7,6 +7,7 @@ from Object.gun import Gun
 from Object.bullet import Bullet
 from Object.explode import Explode
 from Object.shockwave import Shockwave
+from Object.coin import Coin
 from Object.slime import Slime
 import random
 
@@ -17,6 +18,7 @@ class GameScene(Scene):
     bullets = []
     explodes = []
     waves = []
+    coins = []
     player = None
     base = None
 
@@ -70,12 +72,16 @@ class GameScene(Scene):
 
         self.wave_update()
 
+        self.coin_update()
+
         self.player.update()
 
         self.monster_update()
 
     def draw(self):
         self.base.draw()
+
+
 
         for monster in self.monsters:
             monster.draw()
@@ -91,6 +97,9 @@ class GameScene(Scene):
 
         self.player.draw()
 
+        for coin in self.coins:
+            coin.draw()
+
     def add_monster(self):
         self.monsters.append(Slime(random.randint(0, Director.window_width), random.randint(0, Director.window_height), self.base))
 
@@ -104,7 +113,11 @@ class GameScene(Scene):
             bullet.update()
 
             for monster in self.monsters:
-                if monster.inWith(25, bullet):
+                r = 25
+                if monster.explode_mode:
+                    r = 50
+
+                if monster.inWith(r, bullet):
                     self.explodes.append(Explode(bullet.x, bullet.y, "2", 30))
                     monster.set_red()
                     monster.hp -= self.player.gun.damage
@@ -126,12 +139,31 @@ class GameScene(Scene):
             if monster.hp <= 0:
                 self.monsters.remove(monster)
                 self.waves.append(Shockwave(monster.x, monster.y))
+                if not monster.explode_mode and random.randint(1, 10) >= 4:
+                    self.coins.append(Coin(monster.x, monster.y))
+
+            if monster.frame >= 8 and monster in self.monsters:
+                self.monsters.remove(monster)
+                #base.hp -=
+                self.explodes.append(Explode(monster.x, monster.y, "1", 30))
 
     def wave_update(self):
         for wave in self.waves:
             wave.update()
             if wave.frame >= 9:
                 self.waves.remove(wave)
+
+    def coin_update(self):
+        for coin in self.coins:
+            coin.update()
+
+            if coin.intersect(self.player):
+                coin.go_to(self.player)
+
+            if coin.inWith(3, self.player):
+                self.coins.remove(coin)
+                #self.player.money += coin.money
+
 
 
 
