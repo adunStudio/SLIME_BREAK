@@ -6,7 +6,7 @@ from Object.mouse import Mouse
 open_canvas(Director.window_width, Director.window_height)
 
 Director.show_cursor(False)
-Director.show_lattice(False)
+Director.show_lattice(True)
 
 Director.pre_load([
     "character", "character_left", "character_right",
@@ -24,7 +24,7 @@ Director.pre_load([
 
 Director.set_mouse(Mouse())
 
-Director.set_fps(80)
+Director.set_fps(100)
 
 Director.run(StartScene())
 

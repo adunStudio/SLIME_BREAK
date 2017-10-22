@@ -7,7 +7,7 @@ class Coin(Node):
     angle = 0
 
     def __init__(self, x, y):
-        Node.__init__(self, "coin")
+        Node.__init__(self, "coin", 8)
         self.x = x
         self.y = y
         self.frame_x = math.floor(self.width / 8)

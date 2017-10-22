@@ -81,8 +81,6 @@ class GameScene(Scene):
     def draw(self):
         self.base.draw()
 
-
-
         for monster in self.monsters:
             monster.draw()
 
@@ -157,7 +155,7 @@ class GameScene(Scene):
         for coin in self.coins:
             coin.update()
 
-            if coin.intersect(self.player):
+            if coin.inWith(70, self.player):
                 coin.go_to(self.player)
 
             if coin.inWith(3, self.player):

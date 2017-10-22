@@ -13,7 +13,7 @@ class Character(Node):
     gun = None
 
     def __init__(self):
-        Node.__init__(self, "character_down")
+        Node.__init__(self, "character_down", 4)
         self.x = 50
         self.y = 50
         self.frame_x = math.floor(self.width / 4)

@@ -184,11 +184,12 @@ class Node(metaclass=ABCMeta):
     width, height = (0, 0)
     half_width, half_height = (0, 0)
     frame = 0
-    frame_x = 0
+    frame_x = 1
+    frame_Ex = 1
 
-    def __init__(self, image_name):
+    def __init__(self, image_name, frame_Ex = 1):
         self.image = Director.asset[image_name]
-        self.init()
+        self.init(frame_Ex)
 
 
     @abstractmethod
@@ -199,16 +200,17 @@ class Node(metaclass=ABCMeta):
     def draw(self):
         pass
 
-    def init(self):
+    def init(self, frame_Ex):
         self.width = self.image.w
         self.height = self.image.h
         self.half_width = self.width / 2
         self.half_height = self.height / 2
+        self.frame_Ex = frame_Ex
 
     # AABB 방식
     def intersect(self, node):
-        left_a, bottom_a, right_a, top_a = (self.x - self.half_width, self.y - self.half_height, self.x + self.half_width, self.y + self.half_height)
-        left_b, bottom_b, right_b, top_b = (node.x - node.half_width, node.y - node.half_height, node.x + node.half_width, node.y + self.half_height)
+        left_a, bottom_a, right_a, top_a = (self.x - self.width / self.frame_Ex / 2, self.y - self.half_height, self.x + self.width / self.frame_Ex / 2, self.y + self.half_height)
+        left_b, bottom_b, right_b, top_b = (node.x - node.width / node.frame_Ex / 2, node.y - node.half_height, node.x + node.width / node.frame_Ex / 2, node.y + self.half_height)
 
         if left_a > right_b:
             return False

@@ -13,7 +13,7 @@ class Slime(Node):
     speed = 1.5
 
     def __init__(self, x, y, base):
-        Node.__init__(self, "slime")
+        Node.__init__(self, "slime", 4)
         self.base = base
         self.x = x
         self.y = y
@@ -67,7 +67,7 @@ class Slime(Node):
         self.image = Director.asset["slime_explode"]
         self.explode_mode = True
         self.frame = 0
-        self.init()
+        self.init(8)
         self.frame_x = math.floor(self.width / 8)
         #self.y += 20
         #self.x += 1
