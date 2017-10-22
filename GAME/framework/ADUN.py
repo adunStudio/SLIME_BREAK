@@ -137,8 +137,9 @@ class Core:
         self.fps = fps
 
 
-
 class Scene(metaclass=ABCMeta):
+
+    image = None
 
     @abstractmethod
     def enter(self):

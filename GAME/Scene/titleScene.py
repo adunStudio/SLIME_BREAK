@@ -2,10 +2,8 @@ from pico2d import *
 from Framework.ADUN import Director, Scene
 from Scene.gameScene import GameScene
 
+
 class TitleScene(Scene):
-    core = None
-    image = None
-    time = 60 * 2
 
     def enter(self):
         self.image = Director.asset["title"]
