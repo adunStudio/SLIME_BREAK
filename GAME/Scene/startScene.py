@@ -6,7 +6,7 @@ from Scene.titleScene import TitleScene
 class StartScene(Scene):
     core = None
     image = None
-    time = 60 * 5
+    time = 60 * 1
 
     def enter(self):
         self.image = Director.asset['kpu_credit']

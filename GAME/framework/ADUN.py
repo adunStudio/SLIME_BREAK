@@ -6,6 +6,10 @@ class Core:
 
     window_width = 16 * 80
     window_height = 9 * 80
+    mouse_x, mouse_y = (0, 0)
+    CURSOR = True
+    LATTICE = True
+    fps = 60
     running = None
     stack = None
     asset = {}
@@ -21,12 +25,12 @@ class Core:
 
     @staticmethod
     def getInstnace():
-        if Core.__instnace == None:
+        if Core.__instnace is not None:
             Core()
         return Core.__instnace
 
     def __init__(self):
-        if Core.__instnace != None:
+        if Core.__instnace is not None:
             raise Exception("this class is a singleton!")
         else:
             Core.__instnace == self
@@ -55,9 +59,6 @@ class Core:
         self.running = False
 
     def run(self, scene):
-        if self.mouse is None:
-            self.mouse = Mouse()
-
         self.running = True
         self.stack = [scene]
 
@@ -70,8 +71,11 @@ class Core:
             self.stack[-1].update()
             clear_canvas()
             self.stack[-1].draw()
-            self.mouse.draw()
+            if self.mouse is not None:
+                self.mouse.update()
+                self.mouse.draw()
             update_canvas()
+            delay(1 / self.fps)
 
         while len(self.stack) > 0:
             self.stack[-1].exit()
@@ -84,7 +88,7 @@ class Core:
     def handle_events(self, events):
         for event in events:
             if event.type == SDL_MOUSEMOTION:
-                self.mouse.x, self.mouse.y = event.x, self.window_height - event.y
+                self.mouse_x, self.mouse_y = event.x, self.window_height - event.y
 
             if event.type == SDL_QUIT:
                 Director.quit()
@@ -100,10 +104,38 @@ class Core:
                     self.KEYBOARD["DOWN"] = (event.type == SDL_KEYDOWN)
 
     def get_mouse_x(self):
-        return self.mouse.x
+        return self.mouse_x
 
     def get_mouse_y(self):
-        return self.mouse.y
+        return self.mouse_y
+
+    def set_mouse(self, mouse):
+        if self.mouse is None:
+            self.mouse = mouse
+
+    def set_mouse_type(self, type):
+        if self.mouse is not None:
+            self.mouse.set_type(type)
+
+    def show_cursor(self, show):
+        if show:
+            show_cursor()
+        else:
+            hide_cursor()
+
+        self.CURSOR = show
+
+    def show_lattice(self, show):
+        if show:
+            show_lattice()
+        else:
+            hide_lattice()
+
+        self.LATTICE = show
+
+    def set_fps(self, fps):
+        self.fps = fps
+
 
 
 class Scene(metaclass=ABCMeta):
@@ -148,6 +180,8 @@ class Node(metaclass=ABCMeta):
         self.image = Director.asset[image_name]
         self.width = self.image.w
         self.height = self.image.h
+        self.half_width = self.width / 2
+        self.half_height = self.height / 2
 
     @abstractmethod
     def update(self):
@@ -157,21 +191,27 @@ class Node(metaclass=ABCMeta):
     def draw(self):
         pass
 
+    # AABB 방식
+    def intersect(self, node):
+        left_a, bottom_a, right_a, top_a = (self.x - self.half_width, self.y - self.half_height, self.x + self.half_width, self.y + self.half_height)
+        left_b, bottom_b, right_b, top_b = (node.x - node.half_width, node.y - node.half_height, node.x + node.half_width, node.y + self.half_height)
 
-class Mouse(Node):
-    image = None
-    x, y = (0, 0)
-    pointer = None
+        if left_a > right_b:
+            return False
+        if right_a < left_b:
+            return False
+        if top_a < bottom_b:
+            return False
+        if bottom_a > top_b:
+            return False
 
-    def __init__(self):
-        Node.__init__(self, "mouse_pointer")
-        self.pointer = Director.asset["mouse_pointer"]
+        return True
 
-    def update(self):
-        pass
+    # Circle 방식
+    def inWith(self, r, node):
+        dist = math.sqrt(math.pow(self.x - node.x, 2) + math.pow(self.y - node.y, 2))
+        return dist <= r
 
-    def draw(self):
-        self.image.draw(self.x, self.y)
-    pass
+
 
 Director = Core()

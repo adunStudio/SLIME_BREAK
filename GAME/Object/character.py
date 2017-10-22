@@ -7,12 +7,13 @@ class Character(Node):
     speed = 1
     mouse_angle = 0
     see_angle = 0
+    gun = None
 
     def __init__(self):
         Node.__init__(self, "character_down")
         self.x = 50
         self.y = 50
-        self.frame_x = int(self.width / 4)
+        self.frame_x = math.floor(self.width / 4)
         print(self.frame_x)
 
     def update(self):
@@ -21,9 +22,20 @@ class Character(Node):
         self.mouse_angle = math.atan2(dist_y, dist_x) * (180 / math.pi) + 180
         self.see_angle = ((self.mouse_angle + 22.5) / 45) % 8
         self.set_direction(int(self.see_angle))
+        self.frame = (self.frame + 1) % 4
+
+        if self.gun is not None:
+            self.gun.x = self.x
+            self.gun.y = self.y
+            self.gun.set_direction(int(self.see_angle))
 
     def draw(self):
-        self.image.clip_draw(self.frame * self.frame_x, 0, self.frame_x, self.height, self.x, self.y)
+        if int(self.see_angle) == 6 or int(self.see_angle) == 7 or int(self.see_angle) == 5:
+            self.gun.draw()
+            self.image.clip_draw(self.frame * self.frame_x, 0, self.frame_x, self.height, self.x, self.y)
+        else:
+            self.image.clip_draw(self.frame * self.frame_x, 0, self.frame_x, self.height, self.x, self.y)
+            self.gun.draw()
 
     def set_direction(self, angle):
         switch_case = {
@@ -38,5 +50,7 @@ class Character(Node):
         }
         self.image = switch_case[angle]
 
+    def set_gun(self, gun):
+        self.gun = gun
 
 
