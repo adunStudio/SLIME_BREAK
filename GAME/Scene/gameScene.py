@@ -6,6 +6,7 @@ from Object.base import Base
 from Object.gun import Gun
 from Object.bullet import Bullet
 from Object.explode import Explode
+from Object.shockwave import Shockwave
 from Object.slime import Slime
 import random
 
@@ -15,6 +16,7 @@ class GameScene(Scene):
     monsters = []
     bullets = []
     explodes = []
+    waves = []
     player = None
     base = None
 
@@ -58,11 +60,15 @@ class GameScene(Scene):
             self.add_monster()
             self.time = 0
 
+        self.base.update()
+
         self.check_mouse_attack()
 
         self.bullet_update()
 
         self.explode_update()
+
+        self.wave_update()
 
         self.player.update()
 
@@ -79,6 +85,9 @@ class GameScene(Scene):
 
         for explode in self.explodes:
             explode.draw()
+
+        for wave in self.waves:
+            wave.draw()
 
         self.player.draw()
 
@@ -116,6 +125,14 @@ class GameScene(Scene):
             monster.update()
             if monster.hp <= 0:
                 self.monsters.remove(monster)
+                self.waves.append(Shockwave(monster.x, monster.y))
+
+    def wave_update(self):
+        for wave in self.waves:
+            wave.update()
+            if wave.frame >= 9:
+                self.waves.remove(wave)
+
 
 
 
