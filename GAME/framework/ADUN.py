@@ -4,6 +4,8 @@ from abc import *
 class Core:
     __instnace = None
 
+    window_width = 16 * 80
+    window_height = 9 * 80
     running = None
     stack = None
     asset = {}
@@ -82,7 +84,7 @@ class Core:
     def handle_events(self, events):
         for event in events:
             if event.type == SDL_MOUSEMOTION:
-                self.mouse.x, self.mouse.y = event.x, 600 - event.y
+                self.mouse.x, self.mouse.y = event.x, self.window_height - event.y
 
             if event.type == SDL_QUIT:
                 Director.quit()
@@ -140,6 +142,7 @@ class Node(metaclass=ABCMeta):
     x, y = (0, 0)
     width, height = (0, 0)
     frame = 0
+    frame_x = 0
 
     def __init__(self, image_name):
         self.image = Director.asset[image_name]
