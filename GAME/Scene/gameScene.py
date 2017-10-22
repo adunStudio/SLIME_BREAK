@@ -2,22 +2,25 @@ from pico2d import *
 
 from Framework.ADUN import Director, Scene
 from Object.character import Character
+from Object.base import Base
 from Object.gun import Gun
 from Object.bullet import Bullet
+from Object.explode import Explode
 from Object.slime import Slime
+import random
 
 
 class GameScene(Scene):
+    time = 0
     monsters = []
     bullets = []
+    explodes = []
     player = None
+    base = None
 
     def enter(self):
         Director.set_mouse_type("attack")
-
-        for i in range(11):
-            self.monsters.append(Slime())
-
+        self.base = Base(Director.window_width / 2, Director.window_height - 200)
         self.player = Character()
         self.player.set_gun(Gun(self.player.x, self.player.y))
 
@@ -32,8 +35,8 @@ class GameScene(Scene):
 
     def handle_events(self, events):
         if Director.INPUT["LEFT_CLICK"]:
-            print(3)
-            self.bullets.append(Bullet(self.player.x, self.player.y))
+            if self.player.enable_shot():
+                self.bullets.append(Bullet(self.player.x, self.player.y))
 
         if Director.INPUT["LEFT"]:
             self.player.x -= self.player.speed
@@ -47,26 +50,59 @@ class GameScene(Scene):
         if Director.INPUT["DOWN"]:
             self.player.y -= self.player.speed
 
-
-        pass
-
     def update(self):
+        self.time += 1
+
+        if self.time > 60 * 2:
+            self.monsters.append(Slime(random.randint(0, Director.window_width), random.randint(0, Director.window_height), self.base))
+            self.time = 0
+
+
         Director.set_mouse_type("attack")
         for monster in self.monsters:
             if monster.intersect(Director.mouse):
                 Director.set_mouse_type("attack_red")
 
+        print(len(self.bullets))
+
+        for bullet in self.bullets:
+            bullet.update()
+
+            for monster in self.monsters:
+                if monster.inWith(25, bullet):
+                    self.explodes.append(Explode(bullet.x, bullet.y, "2", 30))
+                    monster.set_red()
+                    monster.hp -= self.player.gun.damage
+                    if bullet in self.bullets:
+                        self.bullets.remove(bullet)
+
+            if (bullet.x < 0 or Director.window_width < bullet.x or bullet.y < 0 or Director.window_height < bullet.y):
+                self.bullets.remove(bullet)
+
+        for explode in self.explodes:
+            explode.update()
+            if explode.time < 0:
+                self.explodes.remove(explode)
+
         self.player.update()
 
         for monster in self.monsters:
             monster.update()
+            if monster.hp <= 0:
+                self.monsters.remove(monster)
+
 
     def draw(self):
+        self.base.draw()
+
         for monster in self.monsters:
             monster.draw()
 
         for bullet in self.bullets:
             bullet.draw()
+
+        for explode in self.explodes:
+            explode.draw()
 
         self.player.draw()
 

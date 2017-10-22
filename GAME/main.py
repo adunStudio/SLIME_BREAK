@@ -16,12 +16,14 @@ Director.pre_load([
     "mg_down", "mg_down_left", "mg_down_right",
     "mg_up", "mg_up_left", "mg_up_right",
     "mouse_pointer", "mouse_attack", "mouse_attack_red",
-    "bullet",
-    "slime", "kpu_credit", "title"])
+    "bullet", "explode1", "explode2",
+    "slime", "slime_red", "slime_break",
+    "base",
+    "kpu_credit", "title"])
 
 Director.set_mouse(Mouse())
 
-Director.set_fps(1000000)
+Director.set_fps(80)
 
 Director.run(StartScene())
 
