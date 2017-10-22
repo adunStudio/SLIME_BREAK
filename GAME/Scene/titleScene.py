@@ -2,7 +2,6 @@ from pico2d import *
 from Framework.ADUN import Director, Scene
 from Scene.gameScene import GameScene
 
-
 class TitleScene(Scene):
     core = None
     image = None
@@ -26,6 +25,7 @@ class TitleScene(Scene):
                 Director.change_scene(GameScene())
 
     def update(self):
+
         pass
 
     def draw(self):

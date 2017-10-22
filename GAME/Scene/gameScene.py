@@ -27,14 +27,23 @@ class GameScene(Scene):
 
     def handle_events(self, events):
         if Director.KEYBOARD["LEFT"]:
-            self.player.x -= 1
+            self.player.x -= self.player.speed
 
         if Director.KEYBOARD["RIGHT"]:
-            self.player.x += 1
+            self.player.x += self.player.speed
+
+        if Director.KEYBOARD["UP"]:
+            self.player.y += self.player.speed
+
+        if Director.KEYBOARD["DOWN"]:
+            self.player.y -= self.player.speed
+
 
         pass
 
     def update(self):
+
+        self.player.update()
 
         for monster in self.monsters:
             monster.update()
