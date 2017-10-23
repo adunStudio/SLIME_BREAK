@@ -1,6 +1,7 @@
 from pico2d import *
 from abc import *
 
+
 class Core:
     __instnace = None
 
@@ -22,7 +23,11 @@ class Core:
         "UP": False,
         "DOWN": False,
         "LEFT_CLICK": False,
-        "RIGHT_CLICK": False
+        "RIGHT_CLICK": False,
+        "ESC": False,
+        "1": False,
+        "2": False,
+        "3": False,
     }
 
     @staticmethod
@@ -110,6 +115,16 @@ class Core:
                     self.INPUT["UP"] = (event.type == SDL_KEYDOWN)
                 elif event.key == SDLK_DOWN or event.key == SDLK_s:
                     self.INPUT["DOWN"] = (event.type == SDL_KEYDOWN)
+                elif event.key == SDLK_DOWN or event.key == SDLK_ESCAPE:
+                    self.INPUT["ESC"] = (event.type == SDL_KEYDOWN)
+                elif event.key == SDLK_DOWN or event.key == SDLK_1:
+                    self.INPUT["1"] = (event.type == SDL_KEYDOWN)
+                elif event.key == SDLK_DOWN or event.key == SDLK_2:
+                    self.INPUT["2"] = (event.type == SDL_KEYDOWN)
+                elif event.key == SDLK_DOWN or event.key == SDLK_3:
+                    self.INPUT["3"] = (event.type == SDL_KEYDOWN)
+
+
 
     def get_mouse_x(self):
         return self.mouse_x
@@ -190,7 +205,6 @@ class Node(metaclass=ABCMeta):
     def __init__(self, image_name, frame_Ex = 1):
         self.image = Director.asset[image_name]
         self.init(frame_Ex)
-
 
     @abstractmethod
     def update(self):

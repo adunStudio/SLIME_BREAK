@@ -1,29 +1,21 @@
 from Framework.ADUN import Director, Node
+from Object.basetower import BaseTower
 from pico2d import *
 import random
 
 
-class FlameTower(Node):
-    money = 50
-    name = "flame"
-    angle = 0
+class FlameTower(BaseTower):
+
+    bullet = "bullet_c"
+    damage = 1
 
     def __init__(self, x, y):
-        Node.__init__(self, "flame_right")
+        BaseTower.__init__(self, "flame", 10, 100, Director.fps / 20)
         self.x = x
         self.y = y
 
     def update(self):
-        pass
-
-    def draw(self):
-        self.image.draw(self.x, self.y)
-
-    def check_enable(self, money):
-        if money >= self.money:
-            self.image = Director.asset["flame_right"]
-        else:
-            self.image = Director.asset["flame_disable"]
+        BaseTower.update(self)
 
 
 
