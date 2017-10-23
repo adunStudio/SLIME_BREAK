@@ -11,6 +11,7 @@ class Character(Node):
     mouse_angle = 0
     see_angle = 0
     gun = None
+    money = 0
 
     def __init__(self):
         Node.__init__(self, "character_down", 4)

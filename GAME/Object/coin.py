@@ -5,6 +5,7 @@ import random
 
 class Coin(Node):
     angle = 0
+    money = 10
 
     def __init__(self, x, y):
         Node.__init__(self, "coin", 8)

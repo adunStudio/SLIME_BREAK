@@ -9,6 +9,8 @@ from Object.explode import Explode
 from Object.shockwave import Shockwave
 from Object.coin import Coin
 from Object.slime import Slime
+from Object.cannontower import CannonTower
+from Object.flametower import FlameTower
 import random
 
 
@@ -19,14 +21,23 @@ class GameScene(Scene):
     explodes = []
     waves = []
     coins = []
+    items = []
+
     player = None
     base = None
+
+    mode = ""
+    ATTACK_MODE = "attack_mode"
+    CREATE_MODE = "create_mode"
 
     def enter(self):
         Director.set_mouse_type("attack")
         self.base = Base(Director.window_width / 2, Director.window_height - 200)
         self.player = Character()
         self.player.set_gun(Gun(self.player.x, self.player.y))
+        self.items.append(CannonTower(50, 80))
+        self.items.append(FlameTower(150, 83))
+        self.mode = self.ATTACK_MODE
 
     def exit(self):
         pass
@@ -39,8 +50,13 @@ class GameScene(Scene):
 
     def handle_events(self, events):
         if Director.INPUT["LEFT_CLICK"]:
-            if self.player.enable_shot():
+            if self.mode == self.ATTACK_MODE and self.player.enable_shot():
                 self.bullets.append(Bullet(self.player.x, self.player.y))
+
+        for event in events:
+            if event.type == SDL_KEYDOWN and event.key == SDLK_1:
+                #if player.money >=
+                pass
 
         if Director.INPUT["LEFT"]:
             self.player.x -= self.player.speed
@@ -64,7 +80,7 @@ class GameScene(Scene):
 
         self.base.update()
 
-        self.check_mouse_attack()
+        self.check_mouse_type()
 
         self.bullet_update()
 
@@ -77,6 +93,8 @@ class GameScene(Scene):
         self.player.update()
 
         self.monster_update()
+
+        self.item_update()
 
     def draw(self):
         self.base.draw()
@@ -98,13 +116,22 @@ class GameScene(Scene):
         for coin in self.coins:
             coin.draw()
 
+        for item in self.items:
+            item.draw()
+
     def add_monster(self):
         self.monsters.append(Slime(random.randint(0, Director.window_width), random.randint(0, Director.window_height), self.base))
 
-    def check_mouse_attack(self):
+    def check_mouse_type(self):
         for monster in self.monsters:
             if monster.intersect(Director.mouse):
                 Director.set_mouse_type("attack_red")
+        '''
+        for item in self.items:
+            if item.intersect(Director.mouse):
+                Director.set_mouse_type("pointer")
+        '''
+
 
     def bullet_update(self):
         for bullet in self.bullets:
@@ -160,7 +187,11 @@ class GameScene(Scene):
 
             if coin.inWith(3, self.player):
                 self.coins.remove(coin)
-                #self.player.money += coin.money
+                self.player.money += coin.money
+
+    def item_update(self):
+        for item in self.items:
+            item.check_enable(self.player.money)
 
 
 
