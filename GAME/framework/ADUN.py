@@ -124,8 +124,6 @@ class Core:
                 elif event.key == SDLK_DOWN or event.key == SDLK_3:
                     self.INPUT["3"] = (event.type == SDL_KEYDOWN)
 
-
-
     def get_mouse_x(self):
         return self.mouse_x
 
