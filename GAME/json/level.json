@@ -1,0 +1,9 @@
+{
+  "player": {
+    "speed": 10
+  },
+
+  "slime": {
+    "speed": 5
+  }
+}
