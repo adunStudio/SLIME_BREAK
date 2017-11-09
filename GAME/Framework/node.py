@@ -1,22 +1,37 @@
 from abc import *
-from Framework.core import *
+from Framework.core import Director
+import math
 
 
 class Node(metaclass=ABCMeta):
-    image = None
     level = None
+    image = None
+    red_image = None
 
     x, y = (0, 0)
     width, height = (0, 0)
     half_width, half_height = (0, 0)
     frame = 0
     frame_x = 1
-    frame_Ex = 1
+    frameEx = 1
 
     def __init__(self, name):
-        pass
-     #   self.image = Director.asset[image_name]
-      #  self.init(frame_Ex)
+        self.level = Director.level[name]
+        self.init()
+
+    def init(self):
+        self.image = self.level["image"]
+
+        if self.level["red_image"] :
+            self.red_image = self.level["red_image"]
+
+        self.width = self.image.w
+        self.height = self.image.h
+        self.half_width = self.width / 2
+        self.half_height = self.height / 2
+
+
+
 
     @abstractmethod
     def update(self, frame_time):
@@ -26,12 +41,6 @@ class Node(metaclass=ABCMeta):
     def draw(self):
         pass
 
-    def init(self, frame_Ex):
-        self.width = self.image.w
-        self.height = self.image.h
-        self.half_width = self.width / 2
-        self.half_height = self.height / 2
-        self.frame_Ex = frame_Ex
 
     # AABB 방식
     def intersect(self, node):
