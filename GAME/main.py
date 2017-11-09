@@ -1,20 +1,20 @@
 import json
 from pico2d import *
-from Framework.ADUN import Director
+from Framework.core import Director
 from Scene.startScene import StartScene
-from Object.mouse import Mouse
 
 image_data_file = open("./json/image.json", "r")
+level_data_file = open("./json/level.json", "r")
 
 open_canvas(Director.window_width, Director.window_height)
 
-Director.show_cursor(False)
+Director.show_cursor(True)
 Director.show_lattice(True)
 
-Director.pre_load(json.load(image_data_file))
+Director.pre_image_load(json.load(image_data_file))
+Director.pre_level_load(json.load(level_data_file))
 image_data_file.close()
-
-Director.set_mouse(Mouse())
+level_data_file.close()
 
 Director.set_fps(100)
 

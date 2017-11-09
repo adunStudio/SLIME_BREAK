@@ -1,9 +1,22 @@
 {
   "player": {
-    "speed": 10
+    "image": "character",
+    "frame": 4,
+    "direction": ["up", "down", "left", "right", "down_left", "down_right", "up_left", "up_right"],
+    "speed": 3
   },
 
   "slime": {
-    "speed": 5
+    "image": "slime",
+    "red_image": "slime_red",
+    "frame": 4,
+    "speed": 1.5
+  },
+
+  "slime_explode": {
+    "image": "slime_explode",
+    "red_image": "slime_explode_red",
+    "frame": 8,
+    "speed": 0
   }
 }

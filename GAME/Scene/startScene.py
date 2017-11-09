@@ -1,9 +1,11 @@
 from pico2d import *
-from Framework.ADUN import Director, Scene
+from Framework.core import Director
+from Framework.scene import Scene
 from Scene.titleScene import TitleScene
 
+
 class StartScene(Scene):
-    time = 60 * 2.5
+    time = 0
 
     def enter(self):
         self.image = Director.asset['kpu_credit']
@@ -20,11 +22,10 @@ class StartScene(Scene):
     def handle_events(self, events):
         pass
 
-    def update(self):
-        self.time -= 1
+    def update(self, frame_time):
+        self.time += frame_time
 
-        if self.time <= 0:
-            self.time = 60 * 2.5
+        if self.time >= 3:
             Director.push_scene(TitleScene())
 
     def draw(self):

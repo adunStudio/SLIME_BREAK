@@ -1,5 +1,6 @@
 from pico2d import *
-from Framework.ADUN import Director, Scene
+from Framework.core import Director
+from Framework.scene import Scene
 from Scene.gameScene import GameScene
 
 
@@ -22,8 +23,7 @@ class TitleScene(Scene):
             if event.type == SDL_KEYDOWN:
                 Director.change_scene(GameScene())
 
-    def update(self):
-
+    def update(self, frame_time):
         pass
 
     def draw(self):
