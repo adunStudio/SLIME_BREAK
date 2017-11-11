@@ -1,13 +1,17 @@
 from pico2d import *
 from Framework.core import Director
 from Framework.scene import Scene
-from Scene.battleScene import BattleScene
+from Object.player import Player
 
 
-class TitleScene(Scene):
+class BattleScene(Scene):
+    time = 0
+
+    player = None
 
     def enter(self):
-        self.image = Director.asset["title"]
+        self.player = Player()
+        pass
 
     def exit(self):
         pass
@@ -19,12 +23,14 @@ class TitleScene(Scene):
         pass
 
     def handle_events(self, events):
-        for event in events:
-            if event.type == SDL_KEYDOWN:
-                Director.change_scene(BattleScene())
+        pass
 
     def update(self, frame_time):
+        self.time += frame_time
+
+        self.player.update(frame_time)
+
         pass
 
     def draw(self):
-        self.image.draw(400, 300)
+        self.player.draw()

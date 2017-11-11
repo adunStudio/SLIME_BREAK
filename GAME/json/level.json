@@ -3,8 +3,10 @@
     "image": "character",
     "red_image": false,
     "frameEx": 4,
-    "direction": ["up", "down", "left", "right", "down_left", "down_right", "up_left", "up_right"],
-    "speed": 3
+    "direction": ["left", "down_left", "down", "down_right", "right", "up_right", "up", "up_left"],
+    "speed": 3,
+    "x": 50,
+    "y": 50
   },
 
   "slime": {
@@ -12,7 +14,9 @@
     "red_image": "slime_red",
     "frameEx": 4,
     "direction": false,
-    "speed": 1.5
+    "speed": 1.5,
+    "x": 0,
+    "y": 0
   },
 
   "slime_explode": {
@@ -20,6 +24,8 @@
     "red_image": "slime_explode_red",
     "frameEx": 8,
     "direction": false,
-    "speed": 0
+    "speed": 0,
+    "x": 0,
+    "y": 0
   }
 }
