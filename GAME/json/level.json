@@ -9,6 +9,16 @@
     "y": 50
   },
 
+  "mg": {
+    "image": "mg",
+    "red_image": false,
+    "frameEx": 1,
+    "direction": ["left", "down_left", "down", "down_right", "right", "up_right", "up", "up_left"],
+    "speed": 3,
+    "x": 50,
+    "y": 50
+  },
+
   "slime": {
     "image": "slime",
     "red_image": "slime_red",

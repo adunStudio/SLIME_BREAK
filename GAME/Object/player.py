@@ -1,5 +1,6 @@
 from Framework.core import Director
 from Framework.node import Node
+from Object.gun import Gun
 import math
 
 
@@ -12,6 +13,7 @@ class Player(Node):
 
     def __init__(self):
         Node.__init__(self, "player")
+        self.gun = Gun(self.x, self.y)
 
     def update(self, frame_time):
         self.angle = math.atan2(Director.get_mouse_y() - self.y, Director.get_mouse_x() - self.x)
@@ -41,9 +43,9 @@ class Player(Node):
 
     def draw(self):
         if int(self.see_angle) == 6 or int(self.see_angle) == 7 or int(self.see_angle) == 5:
-            #self.gun.draw()
+            self.gun.draw()
             self.image.clip_draw(int(self.frame) * self.frame_x, 0, self.frame_x, self.height, self.x, self.y)
         else:
             self.image.clip_draw(int(self.frame) * self.frame_x, 0, self.frame_x, self.height, self.x, self.y)
-            #self.gun.draw()
+            self.gun.draw()
 
