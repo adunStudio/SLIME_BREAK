@@ -1,4 +1,5 @@
 from Framework.ADUN import Director, Node
+from pico2d import *
 import random
 import math
 
@@ -11,9 +12,11 @@ class Slime(Node):
     angle = 0
     base = None
     speed = 1.5
+    font = None
 
     def __init__(self, x, y, base):
         Node.__init__(self, "slime", 4)
+        self.font = load_font("Asset/ENCR10B.TTF", 16)
         self.base = base
         self.x = x
         self.y = y
@@ -28,6 +31,8 @@ class Slime(Node):
         if not self.inWith(50, self.base):
             self.x += math.cos(self.angle) * self.speed
             self.y += math.sin(self.angle) * self.speed
+
+
         else:
             if not self.explode_mode:
                 self.set_explode()
@@ -57,6 +62,7 @@ class Slime(Node):
     def draw(self):
         if not self.explode_mode:
             self.image.clip_draw(int(self.frame) * self.frame_x, 0, self.frame_x, self.height, self.x, self.y)
+            self.font.draw(self.x - 25, self.y - 25, "HP: " + str(self.hp), (255, 0, 0))
         else:
             self.image.clip_draw(int(self.frame) * self.frame_x, 0, self.frame_x, self.height, self.x, self.y + 20)
 

@@ -12,6 +12,7 @@ from Object.slime import Slime
 from Object.item import Item
 from Object.cannontower import CannonTower
 from Object.flametower import FlameTower
+from Object.map import Map
 import random
 
 
@@ -25,6 +26,8 @@ class GameScene(Scene):
     menus = []
     items = []
     towers = []
+    map1 = None
+    map2 = None
 
     player = None
     base = None
@@ -34,8 +37,16 @@ class GameScene(Scene):
     ATTACK_MODE = "attack_mode"
     CREATE_MODE = "create_mode"
 
+    score = 0
+    score_font = None
+
     def enter(self):
+        self.score_font = load_font("Asset/ENCR10B.TTF", 32)
+        self.map1 = Map("json/map1.json")
+        self.map2 = Map("json/map2.json")
         Director.set_mouse_type("attack")
+        Director.sounds['bgm'].set_volume(64)
+        Director.sounds['bgm'].repeat_play()
         self.base = Base(Director.window_width / 2, Director.window_height - 200)
         self.player = Character()
         self.player.set_gun(Gun(self.player.x, self.player.y))
@@ -57,6 +68,8 @@ class GameScene(Scene):
     def handle_events(self, events):
         if Director.INPUT["LEFT_CLICK"]:
             if self.mode == self.ATTACK_MODE and self.player.enable_shot():
+                Director.sounds['shot'].set_volume(32)
+                Director.sounds['shot'].play(1)
                 self.bullets.append(Bullet(self.player.x, self.player.y))
 
             elif self.mode == self.CREATE_MODE and self.selected_item.able:
@@ -122,6 +135,8 @@ class GameScene(Scene):
 
     def draw(self):
 
+        self.map1.draw()
+
         for tower in self.towers:
             tower.draw()
 
@@ -149,6 +164,8 @@ class GameScene(Scene):
 
         if self.mode == self.CREATE_MODE:
             self.selected_item.draw()
+
+        self.score_font.draw(1050, 700, "Score: " + str(self.score), (0, 0, 0))
 
     def add_monster(self):
         self.monsters.append(Slime(random.randint(0, Director.window_width), random.randint(0, Director.window_height), self.base))
@@ -185,15 +202,21 @@ class GameScene(Scene):
             explode.update()
             if explode.time < 0:
                 self.explodes.remove(explode)
+                if(explode.type == 'explode1'):
+                    Director.sounds['slime_explosion'].play(1)
+                    self.base.hp -= 10
 
     def monster_update(self):
         for monster in self.monsters:
             monster.update()
             if monster.hp <= 0:
                 self.monsters.remove(monster)
+                Director.sounds['slime_death'].play(1)
                 self.waves.append(Shockwave(monster.x, monster.y))
                 if not monster.explode_mode and random.randint(1, 10) >= 4:
                     self.coins.append(Coin(monster.x, monster.y))
+                else:
+                    self.score += 10
 
             if monster.frame >= 8 and monster in self.monsters:
                 self.monsters.remove(monster)
@@ -216,6 +239,7 @@ class GameScene(Scene):
             if coin.inWith(3, self.player):
                 self.coins.remove(coin)
                 self.player.money += coin.money
+                Director.sounds['coin'].play(1)
 
     def item_update(self):
         for menu in self.menus:

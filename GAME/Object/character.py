@@ -1,5 +1,4 @@
-from Framework.core import Director
-from Framework.node import Node
+from Framework.ADUN import Director, Node
 import math
 
 
@@ -21,6 +20,8 @@ class Character(Node):
         self.frame_x = math.floor(self.width / 4)
 
     def update(self):
+        if self.cool_time < self.max_cool_time:
+            self.cool_time += 1
 
         dist_y = Director.get_mouse_y() - self.y
         dist_x = Director.get_mouse_x() - self.x
@@ -43,6 +44,19 @@ class Character(Node):
         else:
             self.image.clip_draw(int(self.frame) * self.frame_x, 0, self.frame_x, self.height, self.x, self.y)
             self.gun.draw()
+
+    def set_direction(self, angle):
+        switch_case = {
+            0: Director.asset["character_left"],
+            1: Director.asset["character_down_left"],
+            2: Director.asset["character_down"],
+            3: Director.asset["character_down_right"],
+            4: Director.asset["character_right"],
+            5: Director.asset["character_up_right"],
+            6: Director.asset["character_up"],
+            7: Director.asset["character_up_left"],
+        }
+        self.image = switch_case[angle]
 
     def set_gun(self, gun):
         self.gun = gun

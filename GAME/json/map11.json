@@ -1,0 +1,12 @@
+{
+  "type": "tileset",
+  "name": "tileset2",
+  "image": "json/map.png",
+  "imageheight": 760,
+  "imagewidth": 960,
+  "tileheight": 32,
+  "tilewidth": 32,
+  "columns": 23,
+  "tilecount": 690
+
+}

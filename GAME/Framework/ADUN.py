@@ -5,8 +5,8 @@ from abc import *
 class Core:
     __instnace = None
 
-    window_width = 16 * 80
-    window_height = 9 * 80
+    window_width = 16 * 80 # 1280
+    window_height = 9 * 80 # 720
     mouse_x, mouse_y = (0, 0)
     CURSOR = True
     LATTICE = True
@@ -14,6 +14,7 @@ class Core:
     running = None
     stack = None
     asset = {}
+    sounds = {}
     mouse = None
     events = None
     INPUT =\
@@ -91,6 +92,12 @@ class Core:
     def pre_load(self, assets):
         for name in assets:
             self.asset[name] = load_image("Asset/" + name + ".png")
+
+    def pre_sound_load(self, sounds):
+        for name in sounds:
+            self.sounds[name] = load_wav("Asset/sound/" + name + '.wav')
+
+
 
     def handle_events(self, events):
         for event in events:
@@ -199,8 +206,10 @@ class Node(metaclass=ABCMeta):
     frame = 0
     frame_x = 1
     frame_Ex = 1
+    type =""
 
     def __init__(self, image_name, frame_Ex = 1):
+        self.type = image_name
         self.image = Director.asset[image_name]
         self.init(frame_Ex)
 

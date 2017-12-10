@@ -1,41 +1,9 @@
 {
   "player": {
-    "image": "character",
-    "red_image": false,
-    "frameEx": 4,
-    "direction": ["left", "down_left", "down", "down_right", "right", "up_right", "up", "up_left"],
-    "speed": 3,
-    "x": 50,
-    "y": 50
-  },
-
-  "mg": {
-    "image": "mg",
-    "red_image": false,
-    "frameEx": 1,
-    "direction": ["left", "down_left", "down", "down_right", "right", "up_right", "up", "up_left"],
-    "speed": 3,
-    "x": 50,
-    "y": 50
+    "speed": 10
   },
 
   "slime": {
-    "image": "slime",
-    "red_image": "slime_red",
-    "frameEx": 4,
-    "direction": false,
-    "speed": 1.5,
-    "x": 0,
-    "y": 0
-  },
-
-  "slime_explode": {
-    "image": "slime_explode",
-    "red_image": "slime_explode_red",
-    "frameEx": 8,
-    "direction": false,
-    "speed": 0,
-    "x": 0,
-    "y": 0
+    "speed": 5
   }
 }

@@ -1,5 +1,4 @@
-from Framework.core import Director
-from Framework.node import Node
+from Framework.ADUN import Director, Node
 
 
 class Gun(Node):
@@ -7,7 +6,7 @@ class Gun(Node):
     damage = 10
 
     def __init__(self, x, y):
-        Node.__init__(self, "mg")
+        Node.__init__(self, "mg_down")
         self.x = x
         self.y = y
 
