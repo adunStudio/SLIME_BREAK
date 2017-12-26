@@ -9,10 +9,12 @@ from Object.explode import Explode
 from Object.shockwave import Shockwave
 from Object.coin import Coin
 from Object.slime import Slime
+from Object.redslime import RedSlime
 from Object.item import Item
 from Object.cannontower import CannonTower
 from Object.flametower import FlameTower
 from Object.map import Map
+
 import random
 
 
@@ -168,7 +170,24 @@ class GameScene(Scene):
         self.score_font.draw(1050, 700, "Score: " + str(self.score), (0, 0, 0))
 
     def add_monster(self):
-        self.monsters.append(Slime(random.randint(0, Director.window_width), random.randint(0, Director.window_height), self.base))
+        r = random.randint (0, 4)
+
+        if random.randint(0, 10) > 3:
+            if r == 0:  # 왼쪽
+                self.monsters.append(Slime(-10, random.randint(0, Director.window_height), self.base))
+            elif r == 1:  # 오른쪽
+                self.monsters.append(Slime(Director.window_width, random.randint(0, Director.window_height), self.base))
+            else:  # 아래
+                self.monsters.append(Slime(random.randint(0, Director.window_width), -10, self.base))
+        else:
+            if r == 0:  # 왼쪽
+                self.monsters.append(RedSlime(-10, random.randint(0, Director.window_height), self.base))
+            elif r == 1:  # 오른쪽
+                self.monsters.append(RedSlime(Director.window_width, random.randint(0, Director.window_height), self.base))
+            else:  # 아래
+                self.monsters.append(RedSlime(random.randint(0, Director.window_width), -10, self.base))
+
+
 
     def check_mouse_type(self):
         for monster in self.monsters:

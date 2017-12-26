@@ -83,7 +83,6 @@ class Core:
                 self.mouse.update()
                 self.mouse.draw()
             update_canvas()
-            delay(1 / self.fps)
 
         while len(self.stack) > 0:
             self.stack[-1].exit()

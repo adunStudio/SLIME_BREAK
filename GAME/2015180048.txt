@@ -1,0 +1,30 @@
+Mon Dec 11 00:22:44 2017 +0900 3차
+Tue Nov 21 22:28:32 2017 +0900 slime 2st
+Sun Nov 19 17:51:05 2017 +0900 gun
+Sun Nov 12 01:37:14 2017 +0900 json
+Thu Nov 9 20:31:08 2017 +0900 modify node class
+Thu Nov 9 20:23:51 2017 +0900 Change Framework And Base Class
+Thu Nov 9 19:43:32 2017 +0900 git ignore
+Thu Nov 9 19:42:54 2017 +0900 git ignore
+Thu Nov 9 19:41:24 2017 +0900 git ignore
+Thu Nov 9 19:40:18 2017 +0900 gitignore
+Thu Nov 9 19:37:36 2017 +0900 framework rename
+Thu Nov 9 19:36:55 2017 +0900 image.json
+Mon Nov 6 17:52:40 2017 +0900 add pauseScene
+Tue Oct 24 23:03:27 2017 +0900 kpu_credit 1280 * 720
+Mon Oct 23 23:44:55 2017 +0900 tower
+Mon Oct 23 18:11:42 2017 +0900 cannon and money
+Mon Oct 23 05:04:21 2017 +0900 aabb modify
+Mon Oct 23 04:40:00 2017 +0900 coin
+Mon Oct 23 03:44:29 2017 +0900 crystal + shockwave
+Mon Oct 23 03:20:26 2017 +0900 main loop Refactoring
+Sun Oct 22 22:53:39 2017 +0900 update
+Sun Oct 22 20:27:33 2017 +0900 mouse event
+Sun Oct 22 20:08:11 2017 +0900 scene modify
+Sun Oct 22 20:01:39 2017 +0900 gun + mouse_collision
+Sun Oct 22 17:50:12 2017 +0900 8direction success
+Sun Oct 22 16:47:01 2017 +0900 Director upgrade
+Sun Oct 22 05:30:13 2017 +0900 Director
+Sat Oct 21 17:24:15 2017 +0900 20171021(토)
+Wed Oct 18 20:49:03 2017 +0900 first
+Wed Oct 18 20:44:45 2017 +0900 Initial commit

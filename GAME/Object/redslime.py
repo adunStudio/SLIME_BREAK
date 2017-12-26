@@ -4,7 +4,7 @@ import random
 import math
 
 
-class Slime(Node):
+class RedSlime(Node):
     image = None
     explode_mode = False
     time = 60
@@ -15,8 +15,8 @@ class Slime(Node):
     font = None
 
     def __init__(self, x, y, base):
-        self.slime_type = 1
-        Node.__init__(self, "slime", 4)
+        self.slime_type = 2
+        Node.__init__(self, "slime_red", 4)
         self.font = load_font("Asset/ENCR10B.TTF", 16)
         self.base = base
         self.x = x
@@ -32,28 +32,26 @@ class Slime(Node):
         if not self.inWith(50, self.base):
             self.x += math.cos(self.angle) * self.speed
             self.y += math.sin(self.angle) * self.speed
-
-
         else:
             if not self.explode_mode:
                 self.set_explode()
 
         if self.time < 30:
             if not self.explode_mode:
-                if self.image == Director.asset["slime"] and random.randint(0, 3) == 1:
-                    self.image = Director.asset['slime_red']
-                else:
+                if self.image == Director.asset["slime_red"] and random.randint(0, 3) == 1:
                     self.image = Director.asset['slime']
-            else:
-                if self.image == Director.asset["slime_explode"] and random.randint(0, 3) == 1:
-                    self.image = Director.asset['slime_explode_red']
                 else:
+                    self.image = Director.asset['slime_red']
+            else:
+                if self.image == Director.asset["slime_explode_red"] and random.randint(0, 3) == 1:
                     self.image = Director.asset['slime_explode']
+                else:
+                    self.image = Director.asset['slime_explode_red']
         else:
             if not self.explode_mode:
-                self.image = Director.asset['slime']
+                self.image = Director.asset['slime_red']
             else:
-                self.image = Director.asset['slime_explode']
+                self.image = Director.asset['slime_explode_red']
 
         if not self.explode_mode:
             self.frame = (self.frame + 0.1) % 4
@@ -71,7 +69,7 @@ class Slime(Node):
         self.time = 0
 
     def set_explode(self):
-        self.image = Director.asset["slime_explode"]
+        self.image = Director.asset["slime_explode_red"]
         self.explode_mode = True
         self.frame = 0
         self.init(8)

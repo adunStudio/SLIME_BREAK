@@ -26,7 +26,7 @@ class StartScene(Scene):
 
         if self.time <= 0:
             self.time = 60 * 2.5
-            Director.push_scene(GameScene())
+            Director.push_scene(TitleScene())
 
     def draw(self):
         self.image.draw(Director.window_width / 2, Director.window_height / 2)

@@ -7,7 +7,7 @@ from Object.mouse import Mouse
 image_data_file = open("./json/image.json", "r")
 sound_data_file = open("./json/sound.json", "r")
 
-open_canvas(Director.window_width, Director.window_height)
+open_canvas(Director.window_width, Director.window_height, sync=True)
 
 Director.show_cursor(False)
 Director.show_lattice(True)
