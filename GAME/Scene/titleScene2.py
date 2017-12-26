@@ -1,10 +1,9 @@
 from pico2d import *
 from Framework.ADUN import Director, Scene
-from Scene.gameScene import GameScene
+from Scene.gameScene2 import GameScene
 
 
 class TitleScene(Scene):
-
     def enter(self):
         self.image = Director.asset["title"]
 
@@ -24,9 +23,9 @@ class TitleScene(Scene):
                 y = event.y
                 if 500 <= x and x <= 750:
                     if 470 <= y and y <= 570:
-                        a = GameScene()
-                        Director.change_scene(a)
-                        
+                        b = GameScene()
+                        Director.change_scene(b)
+
     def update(self):
         pass
 

@@ -7,7 +7,7 @@ from pico2d import *
 class Base(Node):
     crystal = None
     crystal_x, crystal_y = (0, 0)
-    hp = 100
+    hp = 10
     font = None
 
     def __init__(self, x, y):

@@ -27,5 +27,7 @@
 
     "coin",
 
-    "kpu_credit", "title"
+    "kpu_credit", "title",
+
+    "myscore", "basebreak"
 ]

@@ -20,8 +20,9 @@ sound_data_file.close()
 
 Director.set_mouse(Mouse())
 
-Director.set_fps(130)
+Director.set_fps(50)
 
 Director.run(StartScene())
+#Director.run(EndScene(600))
 
 close_canvas()

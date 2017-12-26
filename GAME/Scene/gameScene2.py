@@ -15,7 +15,7 @@ from Object.cannontower import CannonTower
 from Object.flametower import FlameTower
 from Object.map import Map
 from Object.slimepong import SlimePong
-from Scene.endScene import EndScene
+from Scene.endScene2 import EndScene
 
 import random
 
