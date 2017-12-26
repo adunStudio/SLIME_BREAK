@@ -13,6 +13,7 @@ class FlameTower(BaseTower):
         BaseTower.__init__(self, "flame", 10, 100, Director.fps / 20)
         self.x = x
         self.y = y
+        self.money = 100
 
     def update(self):
         BaseTower.update(self)

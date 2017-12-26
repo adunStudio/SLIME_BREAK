@@ -14,6 +14,7 @@ from Object.item import Item
 from Object.cannontower import CannonTower
 from Object.flametower import FlameTower
 from Object.map import Map
+from Object.slimepong import SlimePong
 
 import random
 
@@ -30,6 +31,7 @@ class GameScene(Scene):
     towers = []
     map1 = None
     map2 = None
+    pongs = []
 
     player = None
     base = None
@@ -135,6 +137,17 @@ class GameScene(Scene):
 
         self.item_update()
 
+        for pong in self.pongs[:]:
+            pong.update()
+            if pong.death:
+                if pong.num >= 1:
+                    self.monsters.append(Slime(pong.x1, pong.y1, self.base))
+                if pong.num >= 2:
+                    self.monsters.append(Slime(pong.x3, pong.y2, self.base))
+                if pong.num >= 3:
+                    self.monsters.append(Slime(pong.x3, pong.y3, self.base))
+                self.pongs.remove(pong)
+
     def draw(self):
 
         self.map1.draw()
@@ -146,6 +159,9 @@ class GameScene(Scene):
 
         for monster in self.monsters:
             monster.draw()
+
+        for pong in self.pongs:
+            pong.draw()
 
         for bullet in self.bullets:
             bullet.draw()
@@ -232,14 +248,18 @@ class GameScene(Scene):
                 self.monsters.remove(monster)
                 Director.sounds['slime_death'].play(1)
                 self.waves.append(Shockwave(monster.x, monster.y))
-                if not monster.explode_mode and random.randint(1, 10) >= 4:
+
+                if not monster.explode_mode and monster.slime_type == 2:
+                    self.pongs.append(SlimePong(monster.x, monster.y))
+
+                if not monster.explode_mode and random.randint(1, 10) >= 4 and monster.slime_type == 1:
                     self.coins.append(Coin(monster.x, monster.y))
-                else:
+
+                if not monster.explode_mode and monster.slime_type == 1:
                     self.score += 10
 
             if monster.frame >= 8 and monster in self.monsters:
                 self.monsters.remove(monster)
-                #base.hp -=
                 self.explodes.append(Explode(monster.x, monster.y, "1", 30))
 
     def wave_update(self):

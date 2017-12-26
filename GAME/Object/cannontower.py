@@ -6,10 +6,12 @@ import random
 
 class CannonTower(BaseTower):
     bullet = "bullet_b"
-    damage = 3
+    damage = 10
 
     def __init__(self, x, y):
         BaseTower.__init__(self, "cannon", 10)
+        self.money = 30
+
         self.x = x
         self.y = y
 
